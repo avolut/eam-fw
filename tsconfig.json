@@ -1,14 +1,9 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": [
-        "./lib/*"
-      ]
+      "@/*": ["./lib/*"]
     },
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
+    "lib": ["ESNext", "DOM"],
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "bundler",
@@ -22,6 +17,7 @@
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true
+    "allowJs": true,
+    "typeRoots": ["./node_modules/@types", "./lib/types"]
   }
 }
