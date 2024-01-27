@@ -9,5 +9,5 @@ if (typeof isEditor === "undefined") {
     w.isEditor = false;
   }
 }
-w.isMobile = true;
-w.isDesktop = true;
+w.isMobile = false;
+w.isDesktop = false;
