@@ -7,6 +7,9 @@ export { Card } from "@/comps/custom/Card";
 export { Detail } from "@/comps/custom/Detail";
 export { Tab } from "@/comps/custom/Tab";
 export { formatMoney } from "@/comps/form/InputMoney";
+export { Layout } from "@/comps/custom/Layout";
+export { icon } from "@/comps/icon";
+
 import "./lib/utils/init";
 
 export const color = {
@@ -21,5 +24,5 @@ export const user = {
 };
 export const _types = {
   user: JSON.stringify(user),
-  color: JSON.stringify(color)
+  color: JSON.stringify(color),
 };
