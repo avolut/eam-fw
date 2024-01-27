@@ -56,7 +56,7 @@ export const PopUpDropdown: FC<{
                   on_close();
                   local.render();
                 }}
-                className="px-3 py-2 mb-2 cursor-pointer rounded hover:rounded hover:c-text-white"
+                className="w-full px-3 py-2 mb-2 cursor-pointer rounded hover:rounded hover:c-text-white"
               >
                 <p>{item.label}</p>
               </Button>

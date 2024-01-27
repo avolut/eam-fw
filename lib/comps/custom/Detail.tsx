@@ -1,12 +1,46 @@
+import { useLocal } from "@/utils/use-local";
 import { cx } from "class-variance-authority";
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { ZodAny } from "zod";
 
 export const Detail: FC<{
-  detail: () => Record<string, [string, string, string]>;
-  on_load: () => Promise<any>;
+  detail: (item: any) => Record<string, [string, string, string]>;
+  on_load: (arg: { params: any }) => Promise<any>;
   mode: "standard" | "compact" | "inline";
-}> = ({ detail, mode }) => {
-  const values = detail();
+}> = ({ detail, mode, on_load }) => {
+  const local = useLocal({
+    status: "init" as "init" | "loading" | "ready",
+    detail: null as any,
+  });
+  if (!isEditor) {
+    useEffect(() => {
+      if (local.status === "init" && typeof on_load === "function") {
+        local.status = "loading";
+        local.render();
+        const res = on_load({ params: {} });
+        if (typeof res === "object" && res instanceof Promise) {
+          res.then((item) => {
+            local.detail = detail(item);
+            local.status = "ready";
+            local.render();
+          });
+        } else {
+          local.detail = detail(res);
+          local.status = "ready";
+          local.render();
+        }
+      }
+    }, [on_load]);
+  }
+  let values = {};
+
+  if (!isEditor && typeof on_load === "function") {
+    values = local.detail || {};
+  } else {
+    values = detail({});
+    local.status = "ready";
+  }
+
   const entries = Object.entries(values);
   return (
     <div
@@ -20,10 +54,17 @@ export const Detail: FC<{
       {entries.map(([name, data], idx) => {
         const is_first = idx === 0;
         const is_last = idx === entries.length - 1;
+        if (
+          typeof data !== "object" ||
+          !data ||
+          (typeof data === "object" && !Array.isArray(data))
+        )
+          return null;
         const [label, sample, link] = data;
+
         if (mode === "standard") {
           return (
-            <div className="c-flex c-flex-col c-items-stretch mb-2">
+            <div key={idx} className="c-flex c-flex-col c-items-stretch mb-2">
               <div className="c-flex c-font-bold">{label}</div>
               <div className="c-flex">
                 <Linkable sample={sample} link={link} />
@@ -32,7 +73,10 @@ export const Detail: FC<{
           );
         } else if (mode === "compact") {
           return (
-            <div className="c-flex c-flex-row c-items-center mb-1 border-b">
+            <div
+              key={idx}
+              className="c-flex c-flex-row c-items-center mb-1 border-b"
+            >
               <div className="c-flex c-font-bold c-min-w-[30%] c-overflow-hidden c-text-sm">
                 {label}
               </div>
@@ -44,6 +88,7 @@ export const Detail: FC<{
         } else {
           return (
             <div
+              key={idx}
               className={cx(
                 "c-flex c-flex-col c-items-stretch mr-1",
                 !is_last && `border-r pr-2 `,

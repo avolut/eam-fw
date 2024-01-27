@@ -9,6 +9,11 @@ export { Tab } from "@/comps/custom/Tab";
 export { formatMoney } from "@/comps/form/InputMoney";
 import "./lib/utils/init";
 
+export const color = {
+  good: "green",
+  urgent: "red",
+  caution: "orange",
+};
 
 export const user = {
   name: "rizky",
@@ -16,4 +21,5 @@ export const user = {
 };
 export const _types = {
   user: JSON.stringify(user),
+  color: JSON.stringify(color)
 };

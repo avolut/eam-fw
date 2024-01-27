@@ -6,15 +6,24 @@ export const Tab: FC<{
     label: string;
     url: string;
     count: string;
+    color?: string;
     onClick?: () => Promise<void> | void;
   }[];
   active: string;
 }> = ({ tabs, active }) => {
+  const all_tabs = tabs();
   return (
     <div className="c-p-1 c-flex c-flex-1 c-w-full">
       <Tabs defaultValue={active} className="c-flex-1">
-        <TabsList className="c-grid c-w-full c-grid-cols-2">
-          {tabs().map((e, idx) => {
+        <TabsList
+          className={cx(
+            "c-grid c-w-full ",
+            css`
+              grid-template-columns: repeat(${all_tabs.length}, minmax(0, 1fr));
+            `
+          )}
+        >
+          {all_tabs.map((e, idx) => {
             return (
               <TabsTrigger
                 value={idx + ""}
@@ -27,7 +36,16 @@ export const Tab: FC<{
               >
                 <div>{e.label}</div>
                 {e.count && (
-                  <div className="c-bg-blue-500 c-rounded-sm c-px-2 c-text-white">
+                  <div
+                    className={cx(
+                      "c-rounded-sm c-px-2 c-text-white",
+                      e.color
+                        ? css`
+                            background-color: ${e.color};
+                          `
+                        : `c-bg-blue-500`
+                    )}
+                  >
                     {e.count}
                   </div>
                 )}
