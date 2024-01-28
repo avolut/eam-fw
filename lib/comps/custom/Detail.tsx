@@ -1,7 +1,6 @@
 import { useLocal } from "@/utils/use-local";
 import { cx } from "class-variance-authority";
 import { FC, useEffect } from "react";
-import { ZodAny } from "zod";
 
 export const Detail: FC<{
   detail: (item: any) => Record<string, [string, string, string]>;

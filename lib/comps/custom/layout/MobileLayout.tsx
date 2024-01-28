@@ -1,15 +1,18 @@
-import { FC, ReactNode } from "react";
-import { icon } from "../../../..";
 import { getPathname } from "@/utils/pathname";
+import { FC, ReactNode } from "react";
+import { icon } from "@/comps/icon";
+
+const menu = {
+  admin: [
+    ["Home", icon.home, "/adm/home"],
+    ["Inspection", icon.inspect, "/adm/insp/home"],
+    ["Scan QR", icon.qr, "/adm/scan-qr"],
+    ["Maintenance", icon.maintenance, "/adm/maintenance"],
+    ["Profile", icon.profile, "/profile"],
+  ],
+};
 
 export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  const menu = {
-    admin: [
-      ["Home", icon.home, "/adm/home"],
-      ["Inspection", icon.inspect, "/adm/insp/home"],
-      ["Scan QR", icon.qr, "/adm/scan-qr"],
-    ],
-  };
   const active_menu = menu["admin"];
 
   preload(active_menu.map(([_, __, url]) => url) as string[]);
@@ -20,7 +23,8 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
         <div className="c-absolute c-inset-0">{children}</div>
       </div>
       <div className="c-min-h-[70px] c-border-t c-flex-row c-flex c-items-stretch c-justify-center">
-        {active_menu.map(([title, icon, url]) => {
+        {active_menu.map((data) => {
+          const [title, icon, url] = data;
           const is_active = getPathname() === url;
           return (
             <div
@@ -35,7 +39,7 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
               )}
             >
               <div>{icon}</div>
-              <div className="c-text-sm c-mt-1">{title}</div>
+              <div className="c-text-xs c-mt-1">{title}</div>
             </div>
           );
         })}
