@@ -1,6 +1,7 @@
 import { FC, ReactNode, useLayoutEffect, useState } from "react";
 import { MobileLayout } from "./layout/MobileLayout";
 import { DesktopLayout } from "./layout/DesktopLayout";
+import { getPathname } from "@/utils/pathname";
 
 const w = window as any;
 export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
@@ -21,6 +22,7 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           render();
         }, 50);
       } else {
+        console.log(mode);
         if (mode === "desktop") {
           if (window.matchMedia("screen and (max-width: 768px)").matches) {
             w.isMobile = true;
@@ -34,6 +36,7 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
       }
     };
     if (!isEditor) {
+      fn();
       window.addEventListener("resize", fn);
       return () => {
         window.removeEventListener("resize", fn);
@@ -49,7 +52,10 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
         };
       }
     }
-  }, []);
+  }, [isMobile, isDesktop]);
+
+  const no_layout = ["/login"];
+  if (no_layout.includes(getPathname())) return children;
 
   if (isMobile) return <MobileLayout children={children} />;
   return <DesktopLayout children={children} />;
