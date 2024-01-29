@@ -7,8 +7,14 @@ export { Card } from "@/comps/custom/Card";
 export { Detail } from "@/comps/custom/Detail";
 export { Tab } from "@/comps/custom/Tab";
 export { formatMoney } from "@/comps/form/InputMoney";
-export { Layout } from "@/comps/custom/Layout";
+import { Layout as WareifyLayout } from "./apps/wareify/Layout";
 export { icon } from "@/comps/icon";
+
+export const wareify = {
+  Layout: WareifyLayout,
+};
+
+export const cmshub = {};
 
 import "./lib/utils/init";
 

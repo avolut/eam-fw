@@ -22,7 +22,6 @@ export const Layout: FC<{ children: ReactNode }> = ({ children }) => {
           render();
         }, 50);
       } else {
-        console.log(mode);
         if (mode === "desktop") {
           if (window.matchMedia("screen and (max-width: 768px)").matches) {
             w.isMobile = true;

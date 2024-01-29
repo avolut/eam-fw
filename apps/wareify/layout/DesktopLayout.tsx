@@ -12,7 +12,9 @@ export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
             padding: 10px;
           `
         )}
-      ></div>
+      >
+        <div className="c-border-l c-p-2">Wareify</div>
+      </div>
       <div className="c-flex c-flex-1 c-flex-col">{children}</div>
     </div>
   );

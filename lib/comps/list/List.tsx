@@ -2,6 +2,7 @@ import { useLocal } from "@/utils/use-local";
 import { FC, ReactElement, useEffect } from "react";
 import { Skeleton } from "../ui/skeleton";
 import get from "lodash.get";
+
 export const List: FC<{
   className: string;
   on_load: (arg: { params: any }) => Promise<any[]>;

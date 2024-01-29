@@ -7,7 +7,7 @@ const menu = {
     ["Home", icon.home, "/adm/home"],
     ["Inspection", icon.inspect, "/adm/insp/home"],
     ["Scan QR", icon.qr, "/adm/scan-qr"],
-    ["Maintenance", icon.maintenance, "/adm/maintenance"],
+    ["Maintenance", icon.maintenance, "/adm/wo/list"],
     ["Profile", icon.profile, "/profile"],
   ],
 };
