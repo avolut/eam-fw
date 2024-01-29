@@ -1,4 +1,4 @@
-import { Contact2, Drill, Home, ListTodo, QrCode } from "lucide-react";
+import { Contact2, Drill, Home, ListTodo, QrCode, Search } from "lucide-react";
 
 const IconCMSHub = () => {
   return (
@@ -124,6 +124,7 @@ export const icon = {
   qr: <QrCode />,
   maintenance: <Drill />,
   profile: <Contact2 />,
+  search: <Search size={15} />,
   cmshub: <IconCMSHub />
 };
 
