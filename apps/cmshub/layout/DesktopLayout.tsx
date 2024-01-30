@@ -12,6 +12,7 @@ const menuList = {
   admin: [
     { label: "Dashboard", icon: icon.home, url: "/dashboard" },
     { label: "Structure", icon: icon.workflow, url: "/structure" },
+    { label: "Users", icon: icon.user, url: "/users" },
     {
       label: "Content",
       icon: icon.layout,

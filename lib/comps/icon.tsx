@@ -1,4 +1,4 @@
-import { Bell, Calendar, ChevronRight, CircleUser, Contact2, Drill, HelpCircle, Home, LayoutList, ListChecks, ListTodo, PenBoxIcon, QrCode, UserCog, Workflow } from "lucide-react";
+import { Bell, Calendar, ChevronRight, UsersRound, ChevronDown, Contact2, Drill, HelpCircle, Home, LayoutList, ListChecks, ListTodo, PenBoxIcon, QrCode, UserCog, Workflow } from "lucide-react";
 
 export const icon = {
   home: <Home />,
@@ -13,10 +13,11 @@ export const icon = {
   profile: <Contact2 />,
   bell: <Bell />,
   help: <HelpCircle />,
-  user: <CircleUser />,
+  user: <UsersRound />,
   workflow: <Workflow />,
   layout: <LayoutList />,
-  right: <ChevronRight />
+  right: <ChevronRight />,
+  down: <ChevronDown />
 };
 
 
