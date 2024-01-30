@@ -1,7 +1,20 @@
 import { Input } from "@/comps/ui/input";
 import { iconCmsHub } from "../icon";
+import { IMenu, ISession } from "../typing";
+import { useLocal } from "@/utils/use-local";
+import { Menu } from "../menu/Menu";
 
-export const SideBarCMSHub = () => {
+export const SideBarCMSHub = ({
+  menu,
+  session,
+}: {
+  menu: IMenu;
+  session: ISession;
+}) => {
+  const local = useLocal({
+    status: "init" as "init" | "loading" | "ready",
+  });
+
   return (
     <>
       <div className={cx(`c-py-8 c-px-6`)}>{iconCmsHub.logo}</div>
@@ -41,6 +54,9 @@ export const SideBarCMSHub = () => {
             placeholder="Search"
           />
         </div>
+      </div>
+      <div className={cx(``)}>
+        <Menu list={menu[session.roles]} />
       </div>
     </>
   );

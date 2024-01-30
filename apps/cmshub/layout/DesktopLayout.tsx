@@ -3,15 +3,50 @@ import { icon } from "@/comps/icon";
 import { TopBarCMSHub } from "../comps/header/cmshub";
 import { SideBarCMSHub } from "../comps/sidebar/cmshub";
 
-const menus = {
+const session = {
+  id: "0662ef48-761d-4fa8-953a-cfb9beed5e66",
+  name: "Iwan",
+  roles: "admin",
+};
+const menuList = {
   admin: [
-    ["Dashboard", icon.home, "/dashboard"],
-    ["Structure", icon.inspect, "/structure"],
-    ["Content", icon.qr, "/content"],
+    { label: "Dashboard", icon: icon.home, url: "/dashboard" },
+    { label: "Structure", icon: icon.workflow, url: "/structure" },
+    {
+      label: "Content",
+      icon: icon.layout,
+      url: "/content",
+      items: [
+        {
+          label: "Berita Terkini",
+          url: "/content/berita-terkini",
+        },
+        {
+          label: "Siaran Pers",
+          url: "/content/siaran-pers",
+        },
+        { label: "Gallery", url: "/content/gallery" },
+      ],
+    },
   ],
   moderator: [
-    ["Dashboard", icon.home, "/dashboard"],
-    ["Content", icon.qr, "/content"],
+    { label: "Dashboard", icon: icon.home, url: "/dashboard" },
+    {
+      label: "Content",
+      icon: icon.layout,
+      url: "/content",
+      items: [
+        {
+          label: "Berita Terkini",
+          url: "/content/berita-terkini",
+        },
+        {
+          label: "Siaran Pers",
+          url: "/content/siaran-pers",
+        },
+        { label: "Gallery", url: "/content/gallery" },
+      ],
+    },
   ],
 };
 
@@ -20,14 +55,17 @@ export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <div className={cx("c-flex c-w-full c-justify-between")}>
       <div
         className={cx(
-          "", css`width: 300px;`
+          "",
+          css`
+            width: 300px;
+          `
         )}
       >
-        <SideBarCMSHub />
+        <SideBarCMSHub menu={menuList} session={session} />
       </div>
       <div className={cx("c-w-full")}>
         {/* topbar */}
-          <TopBarCMSHub />
+        <TopBarCMSHub />
         {/* topbar */}
         <div>{children}</div>
       </div>
