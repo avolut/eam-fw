@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { icon } from "@/comps/icon";
-import { TopBarCMSHub } from "@/comps/header/cmshub";
-import { SideBarCMSHub } from "@/comps/sidebar/cmshub";
+import { TopBarCMSHub } from "../comps/header/cmshub";
+import { SideBarCMSHub } from "../comps/sidebar/cmshub";
 
 const menus = {
   admin: [

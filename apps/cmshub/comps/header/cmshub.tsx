@@ -1,3 +1,5 @@
+import { icon } from "../../../../lib/comps/icon";
+
 export const TopBarCMSHub = () => {
   return (
     <div className={cx("c-bg-[#f5f8fa]")}>
@@ -17,7 +19,10 @@ export const TopBarCMSHub = () => {
                 <div className={cx(`c-text-2xl`, css``)}>Structure</div>
                 <div className={cx(`c-text-[#5E5ADB] c-font-bold c-text-base  rounded-full c-bg-[#eaeaf6] c-px-2 c-py-1`, css``)}>27</div>
             </div>
-            <div>Kanan</div>
+            <div className={cx(`c-flex c-space-x-2`, css``)}>
+                <div>{icon.bell}</div>
+                <div>{icon.help}</div>
+            </div>
         </div>
       </div>
     </div>

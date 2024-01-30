@@ -1,10 +1,10 @@
-import { icon } from "@/comps/icon";
 import { Input } from "@/comps/ui/input";
+import { iconCmsHub } from "../icon";
 
 export const SideBarCMSHub = () => {
   return (
     <>
-      <div className={cx(`c-py-8 c-px-4`)}>{icon.cmshub}</div>
+      <div className={cx(`c-py-8 c-px-6`)}>{iconCmsHub.logo}</div>
       <div
         className={cx(
           "c-flex",
@@ -24,7 +24,7 @@ export const SideBarCMSHub = () => {
             `
           )}
         >
-          {icon.search}
+          {iconCmsHub.search}
         </div>
         <div>
           <Input
