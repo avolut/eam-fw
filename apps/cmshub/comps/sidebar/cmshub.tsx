@@ -16,24 +16,21 @@ export const SideBarCMSHub = ({
     status: "init" as "init" | "loading" | "ready",
   });
 
+  const menuBottom = [
+    { label: "Notifications", icon: icon.bell, url: "/notification" },
+    { label: "Settings", icon: icon.setting, url: "/setting" },
+  ]
+
   return (
-    <div className={cx(`c-flex c-flex-col c-justify-between c-h-full c-border-r`)}>
+    <div
+      className={cx(`c-flex c-flex-col c-justify-between c-h-full c-border-r`)}
+    >
       <div>
         <div className={cx(`c-py-8 c-px-6`)}>{iconCmsHub.logo}</div>
-        <div
-          className={cx(
-            `c-flex c-px-4`
-          )}
-        >
+        <div className={cx(`c-flex c-px-4`)}>
           <div
             className={cx(
-              "c-flex c-justify-center c-items-center",
-              css`
-                background-color: #f5f8fa;
-                padding-left: 10px;
-                border-top-left-radius: 5px;
-                border-bottom-left-radius: 5px;
-              `
+              `c-flex c-justify-center c-items-center c-pl-2 c-bg-[#f5f8fa] c-rounded-tl-lg c-rounded-bl-lg`
             )}
           >
             {iconCmsHub.search}
@@ -41,14 +38,7 @@ export const SideBarCMSHub = ({
           <div className={cx(`c-w-full`)}>
             <Input
               className={cx(
-                "",
-                css`
-                  background-color: #f5f8fa;
-                  border: none;
-                  outline: none;
-                  border-top-left-radius: 0px;
-                  border-bottom-left-radius: 0px;
-                `
+                `c-bg-[#f5f8fa] c-border-none c-outline-none c-rounded-tl-none c-rounded-bl-none`
               )}
               placeholder="Search"
             />
@@ -58,13 +48,16 @@ export const SideBarCMSHub = ({
           <Menu list={menu[session.roles]} />
         </div>
       </div>
-      <div className={cx(`c-bg-gray-100 c-py-2`)}>
-        <div className={cx(`c-flex c-justify-between c-items-center c-px-4`)}>
+      <div className={cx(``)}>
+        <div className={cx(`c-pb-2`)}>
+          <Menu list={menuBottom} />
+        </div>
+        <div className={cx(`c-bg-gray-100 c-flex c-justify-between c-items-center c-px-4 c-py-2`)}>
           <div className={cx(`c-flex c-space-x-2 c-font-bold c-items-center`)}>
             <div>{session.image}</div>
             <div className={cx(`c-capitalize`)}>{session.roles}</div>
           </div>
-          <div className={cx(``)}>. . .</div>
+          <div className={cx(`c-cursor-pointer`)}>. . .</div>
         </div>
       </div>
     </div>

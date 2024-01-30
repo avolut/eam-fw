@@ -42,7 +42,7 @@ export const Menu: FC<{ list: IMenuItem[] }> = ({ list }) => {
   return (
     <div
       className={cx(
-        `c-border-t c-pt-8 c-mt-4 c-flex c-flex-col c-px-4 c-space-y-2`
+        `c-border-t c-pt-4 c-mt-4 c-flex c-flex-col c-px-4 c-space-y-2`
       )}
     >
       {list.map((menu, i) => {

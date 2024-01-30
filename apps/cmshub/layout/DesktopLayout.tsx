@@ -16,9 +16,9 @@ const menuList = {
     { label: "Structure", icon: icon.workflow, url: "/structure" },
     { label: "Users", icon: icon.user, url: "/users" },
     {
-      label: "Content",
-      icon: icon.layout,
-      url: "/content",
+      label: "Article",
+      icon: icon.article,
+      url: "/article",
       items: [
         {
           label: "Berita Terkini",
