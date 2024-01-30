@@ -6,7 +6,7 @@ const menu = {
   admin: [
     ["Home", icon.home, "/adm/home"],
     ["Inspection", icon.inspect, "/adm/insp/home"],
-    ["Scan QR", icon.qr, "/adm/scan-qr"],
+    ["Scan QR", icon.qr, "/master/asset/detail/:id"],
     ["Maintenance", icon.maintenance, "/adm/wo/list"],
     ["Profile", icon.profile, "/profile"],
   ],
@@ -18,11 +18,24 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
   preload(active_menu.map(([_, __, url]) => url) as string[]);
 
   return (
-    <div className={cx("c-flex c-flex-1 c-flex-col c-select-none")}>
+    <div
+      className={cx(
+        "c-flex c-flex-1 c-flex-col c-select-none c-overflow-hidden c-cursor-pointer"
+      )}
+    >
       <div className="c-relative c-flex-1 c-overflow-auto">
         <div className="c-absolute c-inset-0">{children}</div>
       </div>
-      <div className="c-min-h-[70px] c-border-t c-flex-row c-flex c-items-stretch c-justify-center">
+      <div
+        className={cx(
+          " c-flex-row c-flex c-items-stretch c-justify-center",
+          css`
+            user-select: none;
+            border-top: 1px solid #ececeb;
+            min-height: 60px;
+          `
+        )}
+      >
         {active_menu.map((data) => {
           const [title, icon, url] = data;
           const is_active = getPathname() === url;
@@ -32,14 +45,23 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
                 if (typeof url === "string") navigate(url);
               }}
               className={cx(
-                "c-flex c-flex-col c-justify-center c-items-center c-px-3 c-border-t-2 c-flex-1",
+                "c-flex c-flex-col c-justify-center c-items-center c-px-3 c-flex-1 c-transition-all",
                 is_active
-                  ? "c-bg-blue-50 c-border-t-blue-600"
+                  ? css`
+                      background: #eff6ff;
+                      border-top: 3px solid #2463eb;
+                    `
                   : "c-border-t-transparent"
               )}
             >
-              <div>{icon}</div>
-              <div className="c-text-xs c-mt-1">{title}</div>
+              <div
+                className={css`
+                  margin-bottom: 3px;
+                `}
+              >
+                {icon}
+              </div>
+              <div className="c-text-xs c-whitespace-nowrap">{title}</div>
             </div>
           );
         })}

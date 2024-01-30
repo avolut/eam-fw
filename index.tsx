@@ -7,12 +7,15 @@ export { Card } from "@/comps/custom/Card";
 export { Detail } from "@/comps/custom/Detail";
 export { Tab } from "@/comps/custom/Tab";
 export { formatMoney } from "@/comps/form/InputMoney";
+export { shortDate, longDate } from "@/utils/date";
 import { Layout as WareifyLayout } from "./apps/wareify/Layout";
 import { Layout as CmsHubLayout } from "./apps/cmshub/Layout";
+import { WareifyStatus } from "./apps/wareify/Status";
 export { icon } from "@/comps/icon";
 
 export const wareify = {
   Layout: WareifyLayout,
+  Status: WareifyStatus
 };
 
 export const cmshub = {

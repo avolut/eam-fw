@@ -1,6 +1,7 @@
 import { useLocal } from "@/utils/use-local";
 import { cx } from "class-variance-authority";
 import { FC, useEffect } from "react";
+import { Skeleton } from "../ui/skeleton";
 
 export const Detail: FC<{
   detail: (item: any) => Record<string, [string, string, string]>;
@@ -11,10 +12,12 @@ export const Detail: FC<{
     status: "init" as "init" | "loading" | "ready",
     detail: null as any,
   });
+
   if (!isEditor) {
     useEffect(() => {
       if (local.status === "init" && typeof on_load === "function") {
         local.status = "loading";
+        local.detail = detail({});
         local.render();
         const res = on_load({ params: {} });
         if (typeof res === "object" && res instanceof Promise) {
@@ -36,7 +39,7 @@ export const Detail: FC<{
   if (!isEditor && typeof on_load === "function") {
     values = local.detail || {};
   } else {
-    values = detail({});
+    values = detail(null);
     local.status = "ready";
   }
 
@@ -61,12 +64,16 @@ export const Detail: FC<{
           return null;
         const [label, sample, link] = data;
 
+        if (link) {
+          preload(link);
+        }
+
         if (mode === "standard") {
           return (
             <div key={idx} className="c-flex c-flex-col c-items-stretch mb-2">
               <div className="c-flex c-font-bold">{label}</div>
               <div className="c-flex">
-                <Linkable sample={sample} link={link} />
+                <Linkable sample={sample} link={link} status={local.status} />
               </div>
             </div>
           );
@@ -79,8 +86,8 @@ export const Detail: FC<{
               <div className="c-flex c-font-bold c-min-w-[30%] c-overflow-hidden c-text-sm">
                 {label}
               </div>
-              <div className="c-flex c-flex-1 c-ml-2 items-center">
-                <Linkable sample={sample} link={link} />
+              <div className={cx("c-flex c-flex-1 c-ml-2 items-center")}>
+                <Linkable sample={sample} link={link} status={local.status} />
               </div>
             </div>
           );
@@ -90,13 +97,13 @@ export const Detail: FC<{
               key={idx}
               className={cx(
                 "c-flex c-flex-col c-items-stretch mr-1",
-                !is_last && `border-r pr-2 `,
+                !is_last && `border-r pr-2`,
                 !is_first && `ml-1`
               )}
             >
-              <div className="c-flex c-font-bold">{label}</div>
+              <div className={"c-flex c-font-bold"}>{label}</div>
               <div className="c-flex">
-                <Linkable sample={sample} link={link} />
+                <Linkable sample={sample} link={link} status={local.status} />
               </div>
             </div>
           );
@@ -106,8 +113,27 @@ export const Detail: FC<{
   );
 };
 
-const Linkable: FC<{ sample?: string; link?: string }> = ({ sample, link }) => {
-  if (!link) return sample || "-";
+const Linkable: FC<{
+  sample?: string;
+  link?: string;
+  status: "init" | "loading" | "ready";
+}> = ({ sample, link, status }) => {
+  const loading = (
+    <Skeleton
+      className={cx(
+        css`
+          flex: 1;
+          height: 8px;
+        `
+      )}
+    />
+  );
+
+  if (!link) {
+    if (status !== "ready") return loading;
+    return sample || "-";
+  }
+
   return (
     <div
       className="c-flex-1 c-px-2 c-my-1 c-rounded-md c-border c-flex c-items-center cursor-pointer"
@@ -117,12 +143,40 @@ const Linkable: FC<{ sample?: string; link?: string }> = ({ sample, link }) => {
         }
       }}
     >
-      <div className="c-flex-1">{sample}</div>
+      {status === "ready" ? (
+        <>
+          <div
+            className={cx(
+              "c-flex-1",
+              css`
+                line-height: 1.1;
+                padding: 5px 0px;
+              `
+            )}
+          >
+            {sample || '-'}
+          </div>
+        </>
+      ) : (
+        <div
+          className={cx(
+            css`
+              flex: 1;
+              padding: 5px;
+              min-width: 30px;
+              min-height: 19px;
+            `
+          )}
+        >
+          {loading}
+        </div>
+      )}
       <svg
         width="15"
         height="15"
         viewBox="0 0 15 15"
         fill="none"
+        className="c-ml-2"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
