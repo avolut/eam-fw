@@ -36,7 +36,7 @@ export const MenuItem: FC<{
         {items && <div>{is_active ? defaultIcon.down : defaultIcon.right}</div>}
       </div>
       {items && (
-        <div className={cx(`c-transition-all c-duration-300 c-ease-in-out ${is_active ? `c-opacity-100 c-delay-300` : `c-delay-0 opacity-0`}`)}>
+        <div className={cx(`c-transition-all c-duration-300 c-ease-in-out ${is_active ? `c-opacity-100 c-delay-100` : `c-delay-0 opacity-0`}`)}>
           {renderMenuItem && renderMenuItem(items)}
         </div>
       )}

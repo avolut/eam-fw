@@ -20,7 +20,8 @@ type IMenu = Record<IRole, IMenuItem[]>;
 type ISession = {
   id: string;
   name: string;
-  roles: string
+  roles: string;
+  image: ReactElement | string
 }
 
 export { IMenu, IMenuItem, IItem, ISession };

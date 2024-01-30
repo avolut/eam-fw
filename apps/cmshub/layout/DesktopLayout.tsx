@@ -2,11 +2,13 @@ import { FC, ReactNode } from "react";
 import { icon } from "@/comps/icon";
 import { TopBarCMSHub } from "../comps/header/cmshub";
 import { SideBarCMSHub } from "../comps/sidebar/cmshub";
+import { iconCmsHub } from "../comps/icon";
 
 const session = {
   id: "0662ef48-761d-4fa8-953a-cfb9beed5e66",
   name: "Iwan",
   roles: "admin",
+  image: iconCmsHub.profile
 };
 const menuList = {
   admin: [
@@ -53,10 +55,10 @@ const menuList = {
 
 export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className={cx("c-flex c-w-full c-justify-between")}>
+    <div className={cx("c-flex c-w-full c-flex-1 c-justify-between")}>
       <div
         className={cx(
-          "",
+          `c-h-full`,
           css`
             width: 300px;
           `
@@ -66,7 +68,7 @@ export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
       </div>
       <div className={cx("c-w-full")}>
         {/* topbar */}
-        <TopBarCMSHub />
+        <TopBarCMSHub session={session} />
         {/* topbar */}
         <div>{children}</div>
       </div>
