@@ -14,12 +14,18 @@ export const SideBarCMSHub = ({
 }) => {
   const local = useLocal({
     status: "init" as "init" | "loading" | "ready",
+    showBottomMenu: false as boolean
   });
 
   const menuBottom = [
     { label: "Notifications", icon: icon.bell, url: "/notification" },
     { label: "Settings", icon: icon.setting, url: "/setting" },
   ]
+
+  const onShowButtomMenu = () => {
+    local.showBottomMenu = !local.showBottomMenu
+    local.render()
+  }
 
   return (
     <div
@@ -49,7 +55,7 @@ export const SideBarCMSHub = ({
         </div>
       </div>
       <div className={cx(``)}>
-        <div className={cx(`c-pb-2`)}>
+        <div className={cx(`c-pb-2 c-transition-all c-duration-300 c-ease-in-out ${local.showBottomMenu ? `c-opacity-100 c-delay-100` : `c-opacity-0 c-delay-0`}`)}>
           <Menu list={menuBottom} />
         </div>
         <div className={cx(`c-bg-gray-100 c-flex c-justify-between c-items-center c-px-4 c-py-2`)}>
@@ -57,7 +63,7 @@ export const SideBarCMSHub = ({
             <div>{session.image}</div>
             <div className={cx(`c-capitalize`)}>{session.roles}</div>
           </div>
-          <div className={cx(`c-cursor-pointer`)}>. . .</div>
+          <div className={cx(`c-cursor-pointer`)} onClick={onShowButtomMenu}>. . .</div>
         </div>
       </div>
     </div>
