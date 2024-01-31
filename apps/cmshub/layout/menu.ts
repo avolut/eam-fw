@@ -29,7 +29,9 @@ const menu: IMenu = {
     { label: "Maklumat", icon: icon.megaphone, url: "/maklumat" },
     { label: "Sasaran", icon: icon.pointer, url: "/sasaran" },
     { label: "Rangkuman", icon: icon.note, url: "/rangkuman" },
-    { label: "TJSL", icon: icon.heart, url: "tjsl" },
+    { label: "TJSL", icon: icon.heart, url: "/tjsl" },
+    { label: "Tarif", icon: icon.wallet, url: "/tarif" },
+    { label: "Unduh Dokumen", icon: icon.download, url: "/unduh-dokumen" },
     {
       label: "Article",
       icon: icon.article,
@@ -168,6 +170,25 @@ const menu: IMenu = {
         {
           label: "Jadwal Kapal",
           url: "/jadwal/kapal",
+        },
+      ],
+    },
+    {
+      label: "Sosialisasi dan Pelaporan",
+      icon: icon.volume,
+      url: "#",
+      items: [
+        {
+          label: "Gratifikasi",
+          url: "/sosialisasi-pelaporan/gratifikasi",
+        },
+        {
+          label: "Komitmen",
+          url: "/sosialisasi-pelaporan/komitmen",
+        },
+        {
+          label: "Sistem Pelaporan Pelanggaran",
+          url: "/sosialisasi-pelaporan/sistem-pelaporan-pelanggaran",
         },
       ],
     },

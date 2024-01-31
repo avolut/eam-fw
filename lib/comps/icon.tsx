@@ -1,4 +1,4 @@
-import { Bell, Calendar, ChevronRight, UsersRound, ChevronDown, Contact2, Drill, HelpCircle, Home, LayoutList, ListChecks, ListTodo, PenBoxIcon, QrCode, UserCog, Workflow, Settings, Newspaper, PanelRightOpen, PanelLeftOpen, LayoutDashboard, Building, Box, Package, Blocks, Megaphone, MousePointerSquare, Siren, Ship, HeartHandshake, StickyNote } from "lucide-react";
+import { Bell, Calendar, ChevronRight, UsersRound, ChevronDown, Contact2, Drill, HelpCircle, Home, LayoutList, ListChecks, ListTodo, PenBoxIcon, QrCode, UserCog, Workflow, Settings, Newspaper, PanelRightOpen, PanelLeftOpen, LayoutDashboard, Building, Box, Package, Blocks, Megaphone, MousePointerSquare, Siren, Ship, HeartHandshake, StickyNote, Volume2, Wallet, FileDown } from "lucide-react";
 
 export const icon = {
   home: <Home />,
@@ -36,7 +36,10 @@ export const icon = {
   policy: <Siren />,
   ship: <Ship />,
   heart: <HeartHandshake />,
-  note: <StickyNote />
+  note: <StickyNote />,
+  volume: <Volume2 />,
+  wallet: <Wallet />,
+  download: <FileDown />
 };
 
 
