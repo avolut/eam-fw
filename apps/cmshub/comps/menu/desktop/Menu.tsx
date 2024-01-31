@@ -61,7 +61,7 @@ export const Menu: FC<{ list: IMenuItem[] }> = ({ list }) => {
   return (
     <div
       className={cx(
-        `c-pt-4 c-flex c-flex-col c-px-4 c-space-y-2 c-overflow-y-hidden`
+        `c-flex c-flex-col c-space-y-2 c-overflow-y-hidden`
       )}
     >
       {local.menus.map((menu, i) => {

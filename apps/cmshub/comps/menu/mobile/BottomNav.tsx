@@ -16,7 +16,7 @@ export const BottomNav: FC<{ menu: IBottomNav[] }> = ({ menu }) => {
   return (
     <div className={cx(`c-flex c-flex-1 c-justify-between c-px-2`)}>
       {menu.map((item, i) => {
-        const { label, icon, url } = item;
+        const { label, activeIcon, inActiveIcon, url } = item;
         let is_active = false;
         if (local.menu_selected) {
           is_active = local.menu_selected === item.url;
@@ -25,7 +25,7 @@ export const BottomNav: FC<{ menu: IBottomNav[] }> = ({ menu }) => {
         }
 
         return (
-          <BottomNavItem is_active={is_active} label={label} icon={icon} url={url} onClick={onClick} />
+          <BottomNavItem is_active={is_active} label={label} activeIcon={activeIcon} inActiveIcon={inActiveIcon} url={url} onClick={onClick} />
         );
       })}
     </div>

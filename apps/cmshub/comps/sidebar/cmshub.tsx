@@ -30,7 +30,7 @@ export const SideBarCMSHub = ({
   return (
     <div
       className={cx(
-        `c-flex c-flex-col c-justify-between c-h-screen c-border-r c-relative`
+        `c-flex c-flex-1 c-flex-col c-h-full c-border-r c-relative`
       )}
     >
       <div className={cx(`c-border-b c-pb-6 `)}>
@@ -53,33 +53,35 @@ export const SideBarCMSHub = ({
           </div>
         </div>
       </div>
-      <div className={cx(`c-h-fit c-overflow-y-scroll`)}>
-        <Menu list={menu[session.roles]} />
+      <div className="c-flex-1 c-relative c-overflow-y-auto">
+        <div className={cx(`c-absolute c-inset-0`)}>
+          <Menu list={menu[session.roles]} />
+        </div>
       </div>
-      <div
-        className={cx(
-          `c-bg-white c-transition-all c-duration-300 c-ease-in-out c-pb-2 c-border-t ${
-            local.showBottomMenu
-              ? `c-opacity-100 c-delay-100`
-              : `c-h-0 c-opacity-0 c-delay-0`
-          }`
-        )}
-      >
-        <Menu list={menuBottom} />
-      </div>
-      <div className={cx(`c-flex c-flex-col c-z-20 c-w-full`)}>
+      <div className={cx(`c-flex c-flex-col`)}>
         <div
           className={cx(
-            `c-bg-gray-100 c-flex c-justify-between c-items-center c-px-4 c-py-2`
+            `c-bg-gray-100 c-flex c-justify-between c-items-center c-px-4 c-py-2 c-cursor-pointer hover:c-bg-blue-50`
           )}
+          onClick={onShowButtomMenu}
         >
           <div className={cx(`c-flex c-space-x-2 c-font-bold c-items-center`)}>
             <div>{session.image}</div>
             <div className={cx(`c-capitalize`)}>{session.roles}</div>
           </div>
-          <div className={cx(`c-cursor-pointer`)} onClick={onShowButtomMenu}>
-            . . .
+          <div className={cx(`c-cursor-pointer`)}>
+            {local.showBottomMenu ? icon.down : icon.right}
           </div>
+        </div>
+        <div
+          className={cx(
+            `c-bg-white c-transition-all c-duration-300 c-ease-in-out c-border-t`,
+            local.showBottomMenu
+              ? `c-opacity-100 c-delay-100`
+              : `c-h-0 c-opacity-0 c-delay-0`
+          )}
+        >
+          <Menu list={menuBottom} />
         </div>
       </div>
     </div>

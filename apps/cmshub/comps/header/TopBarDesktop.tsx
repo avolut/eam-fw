@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { icon } from "../../../../lib/comps/icon";
 import { ISession } from "../typing";
 
-export const TopBarCMSHub = ({
+export const TopBarDesktop = ({
   session,
   onShowSideBarMenu,
 }: {

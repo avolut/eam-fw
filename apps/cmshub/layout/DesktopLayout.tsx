@@ -1,9 +1,8 @@
-import { FC, ReactNode } from "react";
-import { icon } from "@/comps/icon";
-import { TopBarCMSHub } from "../comps/header/cmshub";
-import { SideBarCMSHub } from "../comps/sidebar/cmshub";
-import { iconCmsHub } from "../comps/icon";
 import { useLocal } from "@/utils/use-local";
+import { FC, ReactNode } from "react";
+import { TopBarDesktop } from "../comps/header/TopBarDesktop";
+import { iconCmsHub } from "../comps/icon";
+import { SideBarCMSHub } from "../comps/sidebar/cmshub";
 import menu from "./menu";
 
 const session = {
@@ -31,7 +30,7 @@ export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
         className={cx(
           `c-z-10 c-h-full c-transition-all c-duration-300 c-ease-in-out ${
             local.showSideBarMenu
-              ? `c-opacity-100 c-delay-100 c-w-1/5 `
+              ? `c-opacity-100 c-delay-100 c-min-w-[300px] c-w-1/5 `
               : `c-w-0 c-opacity-0 c-delay-0`
           }`
         )}
@@ -44,7 +43,7 @@ export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
         )}
       >
         {/* topbar */}
-        <TopBarCMSHub session={session} onShowSideBarMenu={onShowSideBarMenu} />
+        <TopBarDesktop session={session} onShowSideBarMenu={onShowSideBarMenu} />
         {/* topbar */}
         <div>{children}</div>
       </div>

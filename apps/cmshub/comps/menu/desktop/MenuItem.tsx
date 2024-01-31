@@ -21,8 +21,8 @@ export const MenuItem: FC<{
       <div
         className={cx(
           ...className,
-          `c-z-20 c-flex c-pl-4 c-pr-1 c-py-1 c-items-center c-cursor-pointer c-rounded-lg c-justify-between c-w-full hover:c-underline ${
-            is_active ? `` : `c-text-gray-400`
+          `c-z-20 c-flex c-pl-4 c-pr-1 c-py-2 c-items-center c-transition-all c-cursor-pointer c-justify-between c-w-full hover:c-underline ${
+            is_active ? `c-border-l-[7px] c-border-l-[#044792] c-bg-[#f8fafe]` : `c-text-gray-400`
           }`
         )}
         onClick={() => {

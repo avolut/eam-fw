@@ -26,7 +26,8 @@ type ISession = {
 
 type IBottomNav = {
   label: string;
-  icon?: ReactElement;
+  activeIcon?: ReactElement;
+  inActiveIcon?: ReactElement;
   url: string;
 }
 
