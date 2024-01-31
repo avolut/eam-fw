@@ -1,4 +1,4 @@
-
+declare var db: any;
 declare var isEditor: boolean;
 declare var isMobile: boolean;
 declare var isDesktop: boolean;

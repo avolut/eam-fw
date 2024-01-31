@@ -11,7 +11,7 @@ type IItem = {
 type IMenuItem = {
   label: string;
   icon?: ReactElement;
-  url: string;
+  url: string | Array<string>;
   items?: IItem[];
 };
 
@@ -24,4 +24,10 @@ type ISession = {
   image: ReactElement | string
 }
 
-export { IMenu, IMenuItem, IItem, ISession };
+type IBottomNav = {
+  label: string;
+  icon?: ReactElement;
+  url: string;
+}
+
+export { IMenu, IMenuItem, IItem, ISession, IBottomNav };

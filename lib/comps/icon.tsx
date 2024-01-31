@@ -1,7 +1,9 @@
-import { Bell, Calendar, ChevronRight, UsersRound, ChevronDown, Contact2, Drill, HelpCircle, Home, LayoutList, ListChecks, ListTodo, PenBoxIcon, QrCode, UserCog, Workflow, Settings, Newspaper, PanelRightOpen, PanelLeftOpen } from "lucide-react";
+import { Bell, Calendar, ChevronRight, UsersRound, ChevronDown, Contact2, Drill, HelpCircle, Home, LayoutList, ListChecks, ListTodo, PenBoxIcon, QrCode, UserCog, Workflow, Settings, Newspaper, PanelRightOpen, PanelLeftOpen, LayoutDashboard, Building, Box, Package, Blocks, Megaphone, MousePointerSquare, Siren, Ship, HeartHandshake, StickyNote } from "lucide-react";
 
 export const icon = {
   home: <Home />,
+  dashboard: <LayoutDashboard />,
+  dashboardSmall: <LayoutDashboard className={`c-w-4`} fill="currentColor" />,
   inspect: <ListTodo />,
   qr: <QrCode />,
   maintenance: <Drill />,
@@ -12,16 +14,29 @@ export const icon = {
   notification: <Bell />,
   profile: <Contact2 />,
   bell: <Bell />,
+  bellSmall: <Bell className={`c-w-4`} fill="currentColor" />,
   help: <HelpCircle />,
   user: <UsersRound />,
+  userSmall: <UsersRound className={`c-w-4`} fill="currentColor" />,
   workflow: <Workflow />,
   layout: <LayoutList />,
   right: <ChevronRight />,
   down: <ChevronDown />,
   setting: <Settings />,
+  settingSmall: <Settings className={`c-w-4`} fill="currentColor" />,
   article: <Newspaper />,
   menuOpen: <PanelRightOpen />,
   menuClose: <PanelLeftOpen />,
+  building: <Building />,
+  box: <Box />,
+  package: <Package />,
+  block: <Blocks />,
+  megaphone: <Megaphone />,
+  pointer: <MousePointerSquare />,
+  policy: <Siren />,
+  ship: <Ship />,
+  heart: <HeartHandshake />,
+  note: <StickyNote />
 };
 
 

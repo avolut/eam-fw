@@ -1,14 +1,33 @@
-import { FC } from "react";
-import { IMenu, IMenuItem } from "../typing";
+import { FC, useEffect } from "react";
+import { IMenu, IMenuItem } from "../../typing";
 import { MenuItem } from "./MenuItem";
 import { useLocal } from "@/utils/use-local";
 
 export const Menu: FC<{ list: IMenuItem[] }> = ({ list }) => {
   const local = useLocal({
-    menu_selected: null as string | null,
+    menu_selected: null as string | null | Array<string>,
+    menus: [] as IMenuItem[]
   });
 
-  const onClick = (e: string) => {
+  useEffect(() => {
+    local.menus = list.map((item, i) => {
+      const {label, icon, url, items} = item
+
+      if(items) {
+        const urlItem = items.map((data, i) => {
+          return data.url
+        })
+        
+        return {...item, url: urlItem}
+      }
+      return item
+    })
+
+    local.render()
+  }, [list])
+
+  const onClick = (e: string | Array<string>) => {
+    console.log('sel : ',e)
     local.menu_selected = e;
     local.render();
   };
@@ -21,7 +40,7 @@ export const Menu: FC<{ list: IMenuItem[] }> = ({ list }) => {
           const { label, url, icon, items } = item;
 
           return (
-            <div key={i}>
+            <div key={i} className={cx(`c-pl-6`)}>
               <MenuItem
                 label={label}
                 url={url}
@@ -42,10 +61,10 @@ export const Menu: FC<{ list: IMenuItem[] }> = ({ list }) => {
   return (
     <div
       className={cx(
-        `c-border-t c-pt-4 c-mt-4 c-flex c-flex-col c-px-4 c-space-y-2`
+        `c-pt-4 c-flex c-flex-col c-px-4 c-space-y-2 c-overflow-y-hidden`
       )}
     >
-      {list.map((menu, i) => {
+      {local.menus.map((menu, i) => {
         let is_active = false;
         if (local.menu_selected) {
           is_active = local.menu_selected === menu.url;
