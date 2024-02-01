@@ -6,7 +6,7 @@ import { useLocal } from "@/utils/use-local";
 import { Menu } from "../menu/Menu";
 import { useEffect } from "react";
 
-export const SideBarCMSHub = ({
+export const SideBar = ({
   menu,
   session,
 }: {
@@ -38,7 +38,7 @@ export const SideBarCMSHub = ({
       )}
     >
       <div className={cx(`c-border-b c-pb-6 `)}>
-        <div className={cx(`c-py-8 c-px-6`)}>{iconCmsHub.logo}</div>
+        <div className={cx(`c-py-4 c-px-6`)}>{iconCmsHub.logo}</div>
         <div className={cx(`c-flex c-px-4`)}>
           <div
             className={cx(

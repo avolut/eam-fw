@@ -2,6 +2,7 @@ import { FC } from "react";
 import { icon } from "@/comps/icon";
 import { ISession } from "../../typing";
 import { ProfileHeader } from "../Profile";
+import { iconCmsHub } from "../../icon";
 
 export const TopBarMobile: FC<{
   session: ISession;
@@ -16,7 +17,7 @@ export const TopBarMobile: FC<{
       <div className={cx(`c-cursor-pointer`)} onClick={() => onShowDrawer()}>
         {icon.menu}
       </div>
-      <div className={cx(`c-w-full c-capitalize`)}>Hi {session.name}</div>
+      <div className={cx(``)}>{iconCmsHub.logo}</div>
       <div className={cx(`c-flex c-items-center c-space-x-2`)}>
         {/* <div>{icon.bellSmall}</div> */}
         <ProfileHeader session={session} />

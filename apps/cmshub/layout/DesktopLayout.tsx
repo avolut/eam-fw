@@ -2,7 +2,7 @@ import { useLocal } from "@/utils/use-local";
 import { FC, ReactNode } from "react";
 import { TopBarDesktop } from "../comps/header/desktop/TopBar";
 import { iconCmsHub } from "../comps/icon";
-import { SideBarCMSHub } from "../comps/sidebar/cmshub";
+import { SideBar } from "../comps/sidebar/SideBar";
 import menu from "./menu";
 
 const session = {
@@ -35,7 +35,7 @@ export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
           }`
         )}
       >
-        <SideBarCMSHub menu={menuList} session={session} />
+        <SideBar menu={menuList} session={session} />
       </div>
       <div
         className={cx(
