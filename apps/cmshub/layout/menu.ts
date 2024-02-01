@@ -32,6 +32,8 @@ const menu: IMenu = {
     { label: "TJSL", icon: icon.heart, url: "/tjsl" },
     { label: "Tarif", icon: icon.wallet, url: "/tarif" },
     { label: "Unduh Dokumen", icon: icon.download, url: "/unduh-dokumen" },
+    { label: "User", icon: icon.manage_user, url: "/user", position: 'bottom' },
+    { label: "Setting", icon: icon.setting, url: "/setting", position: 'bottom' },
     {
       label: "Article",
       icon: icon.article,

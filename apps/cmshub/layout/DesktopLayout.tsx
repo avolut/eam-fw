@@ -1,6 +1,6 @@
 import { useLocal } from "@/utils/use-local";
 import { FC, ReactNode } from "react";
-import { TopBarDesktop } from "../comps/header/TopBarDesktop";
+import { TopBarDesktop } from "../comps/header/desktop/TopBar";
 import { iconCmsHub } from "../comps/icon";
 import { SideBarCMSHub } from "../comps/sidebar/cmshub";
 import menu from "./menu";

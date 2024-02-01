@@ -12,6 +12,7 @@ type IMenuItem = {
   label: string;
   icon?: ReactElement;
   url: string | Array<string>;
+  position?: string;
   items?: IItem[];
 };
 

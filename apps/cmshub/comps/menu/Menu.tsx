@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { IMenu, IMenuItem } from "../../typing";
+import { IMenu, IMenuItem } from "../typing";
 import { MenuItem } from "./MenuItem";
 import { useLocal } from "@/utils/use-local";
 

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { icon } from "@/comps/icon";
-import { ISession } from "../typing";
+import { ISession } from "../../typing";
 
 export const TopBarMobile: FC<{
   session: ISession;

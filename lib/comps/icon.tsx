@@ -1,4 +1,4 @@
-import { Bell, Calendar, ChevronRight, UsersRound, ChevronDown, Contact2, Drill, HelpCircle, Home, LayoutList, ListChecks, ListTodo, PenBoxIcon, QrCode, UserCog, Workflow, Settings, Newspaper, PanelRightOpen, PanelLeftOpen, LayoutDashboard, Building, Box, Package, Blocks, Megaphone, MousePointerSquare, Siren, Ship, HeartHandshake, StickyNote, Volume2, Wallet, FileDown, Menu, X } from "lucide-react";
+import { Bell, Calendar, ChevronRight, UsersRound, ChevronDown, Contact2, Drill, HelpCircle, Home, LayoutList, ListChecks, ListTodo, PenBoxIcon, QrCode, UserCog, Workflow, Settings, Newspaper, PanelRightOpen, PanelLeftOpen, LayoutDashboard, Building, Box, Package, Blocks, Megaphone, MousePointerSquare, Siren, Ship, HeartHandshake, StickyNote, Volume2, Wallet, FileDown, Menu, X, LogOut, Rocket, BookOpen } from "lucide-react";
 
 export const icon = {
   home: <Home />,
@@ -45,7 +45,14 @@ export const icon = {
   wallet: <Wallet />,
   download: <FileDown />,
   menu: <Menu />,
-  close: <X />
+  close: <X />,
+  logout: <LogOut />,
+  logoutSmall: <LogOut className={`c-w-4`} fill="currentColor" />,
+  logoutSmallTransparent: <LogOut className={`c-w-4`} />,
+  releaseSmall: <Rocket className={`c-w-4`} fill="currentColor" />,
+  releaseSmallTransparent: <Rocket className={`c-w-4`} />,
+  newsSmall: <BookOpen className={`c-w-4`} fill="currentColor" />,
+  newsSmallTransparent: <BookOpen className={`c-w-4`} />,
 };
 
 

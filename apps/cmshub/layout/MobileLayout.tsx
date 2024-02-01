@@ -1,10 +1,11 @@
 import { FC, ReactNode } from "react";
 import { BottomNav } from "../comps/menu/mobile/BottomNav";
 import { icon } from "@/comps/icon";
-import { TopBarMobile } from "../comps/header/TopBarMobile";
+import { TopBarMobile } from "../comps/header/mobile/TopBar";
 import { iconCmsHub } from "../comps/icon";
 import { DrawerMenu } from "../comps/menu/mobile/Drawer";
 import { useLocal } from "@/utils/use-local";
+import menu from "./menu";
 
 const bottomMenuList = [
   {
@@ -14,22 +15,22 @@ const bottomMenuList = [
     url: "/dashboard",
   },
   {
-    label: "Notification",
-    activeIcon: icon.bellSmall,
-    inActiveIcon: icon.bellSmallTransparent,
-    url: "/notification",
+    label: "Berita Terkini",
+    activeIcon: icon.newsSmall,
+    inActiveIcon: icon.newsSmallTransparent,
+    url: "/article/berita-terkini",
   },
   {
-    label: "Setting",
-    activeIcon: icon.settingSmall,
-    inActiveIcon: icon.settingSmallTransparent,
-    url: "/setting",
+    label: "Press Release",
+    activeIcon: icon.releaseSmall,
+    inActiveIcon: icon.releaseSmallTransparent,
+    url: "/article/press-release",
   },
   {
     label: "Profile",
     activeIcon: icon.userSmall,
     inActiveIcon: icon.userSmallTransparent,
-    url: "/profile",
+    url: "/logout",
   },
 ];
 
@@ -62,7 +63,7 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
           }`
         )}
       >
-        <DrawerMenu session={session} onShowDrawer={onShowDrawer} />
+        <DrawerMenu session={session} onShowDrawer={onShowDrawer} menu={menu} />
       </div>
       {/* End Drawer */}
       <div className={cx(``)}>

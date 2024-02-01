@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { IMenuItem } from "../../typing";
+import { IMenuItem } from "../typing";
 import { icon as defaultIcon } from "@/comps/icon";
 
 export const MenuItem: FC<{

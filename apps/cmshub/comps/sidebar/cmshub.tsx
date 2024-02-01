@@ -1,9 +1,10 @@
 import { Input } from "@/comps/ui/input";
 import { iconCmsHub } from "../icon";
 import { icon } from "@/comps/icon";
-import { IMenu, ISession } from "../typing";
+import { IMenu, IMenuItem, ISession } from "../typing";
 import { useLocal } from "@/utils/use-local";
-import { Menu } from "../menu/desktop/Menu";
+import { Menu } from "../menu/Menu";
+import { useEffect } from "react";
 
 export const SideBarCMSHub = ({
   menu,
@@ -15,12 +16,15 @@ export const SideBarCMSHub = ({
   const local = useLocal({
     status: "init" as "init" | "loading" | "ready",
     showBottomMenu: false as boolean,
+    mainMenu: [] as IMenuItem[],
+    bottomMenu: [] as IMenuItem[]
   });
 
-  const menuBottom = [
-    { label: "Notifications", icon: icon.bell, url: "/notification" },
-    { label: "Settings", icon: icon.setting, url: "/setting" },
-  ];
+  useEffect(() => {
+    local.mainMenu = menu[session.roles].filter((item, i) => item.position !== 'bottom')
+    local.bottomMenu = menu[session.roles].filter((item, i) => item.position === 'bottom')
+    local.render()
+  }, [])
 
   const onShowButtomMenu = () => {
     local.showBottomMenu = !local.showBottomMenu;
@@ -55,7 +59,7 @@ export const SideBarCMSHub = ({
       </div>
       <div className="c-flex-1 c-relative c-overflow-y-auto">
         <div className={cx(`c-absolute c-inset-0`)}>
-          <Menu list={menu[session.roles]} />
+          <Menu list={local.mainMenu} />
         </div>
       </div>
       <div className={cx(`c-flex c-flex-col`)}>
@@ -81,7 +85,7 @@ export const SideBarCMSHub = ({
               : `c-h-0 c-opacity-0 c-delay-0`
           )}
         >
-          <Menu list={menuBottom} />
+          <Menu list={local.bottomMenu} />
         </div>
       </div>
     </div>

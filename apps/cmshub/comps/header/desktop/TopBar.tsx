@@ -1,8 +1,8 @@
 import { getPathname } from "@/utils/pathname";
 import { useLocal } from "@/utils/use-local";
 import { useEffect } from "react";
-import { icon } from "../../../../lib/comps/icon";
-import { ISession } from "../typing";
+import { icon } from "../../../../../lib/comps/icon";
+import { ISession } from "../../typing";
 
 export const TopBarDesktop = ({
   session,
@@ -56,11 +56,15 @@ export const TopBarDesktop = ({
             </div>
           </div>
           <div className={cx(`c-flex c-space-x-4 c-items-center`, css``)}>
-            <div className={cx(`c-cursor-pointer c-text-gray-400`)}>
+            {/* <div className={cx(`c-cursor-pointer c-text-gray-400`)}>
               {icon.bell}
             </div>
             <div className={cx(`c-cursor-pointer c-text-gray-400`)}>
               {icon.help}
+            </div> */}
+            <div className={cx(`c-flex c-flex-col c-leading-4`)}>
+              <div className={cx(`c-w-full c-flex c-justify-end`)}>{session.name}</div>
+              <div className={cx(`c-text-xs c-capitalize c-w-full c-flex c-justify-end`)}>{session.roles}</div>
             </div>
             <div className={cx(`c-cursor-pointer`)}>{session.image}</div>
           </div>
