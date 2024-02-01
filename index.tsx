@@ -8,9 +8,12 @@ export { Form } from "@/comps/form/Form";
 export { formatMoney } from "@/comps/form/InputMoney";
 export { icon } from "@/comps/icon";
 export { List } from "@/comps/list/List";
+export { ListNew } from "@/comps/list/ListNew";
 export { Slider } from "@/comps/ui/slider";
 export { longDate, shortDate } from "@/utils/date";
 export { Button } from "./lib/comps/ui/button";
+
+
 
 import { Layout as CmsHubLayout } from "./apps/cmshub/Layout";
 import { Layout as WareifyLayout } from "./apps/wareify/Layout";
