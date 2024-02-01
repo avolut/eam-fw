@@ -5,7 +5,7 @@
     "tailwindcss": "^3.4.1"
   },
   "scripts": {
-    "css": "tailwindcss --watch -i ./lib/css/globals.css -o ./lib/css/build.css --minify"
+    "startup": "tailwindcss --watch -i ./lib/css/globals.css -o ./lib/css/build.css --minify"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
