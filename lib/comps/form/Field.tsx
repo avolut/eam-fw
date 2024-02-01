@@ -22,6 +22,9 @@ import autosize from "autosize";
 import { InputMoney } from "./InputMoney";
 import { Date } from "./Date";
 import { Datetime } from "./Datetime";
+import { Slider } from "@radix-ui/react-slider";
+import { SliderOptions } from "./Slider/types";
+import { cn } from "@/utils";
 
 export const Field: FC<{
   name: string;
@@ -36,10 +39,14 @@ export const Field: FC<{
     | "button-options"
     | "date"
     | "datetime"
-    | "money";
+    | "money"
+    | "slider"
+    | "master-linkF";
   required: "y" | "n";
   options: () => Promise<{ value: string; label: string }[]>;
-}> = ({ name, form, desc, label, type, required, options }) => {
+  slider_options: () => Promise<SliderOptions>;
+}> = ({ name, form, desc, label, type, required, options, slider_options }) => {
+  const value = form.hook.getValues()[name];
   const local = useLocal({
     dropdown: {
       popup: false,
@@ -47,6 +54,15 @@ export const Field: FC<{
     date: {
       // label: "",
       popup: false,
+    },
+    slider: {
+      value: 0,
+      opt: {
+        step: 1,
+        min: { value: 0, label: "Start" },
+        max: { value: 100, label: "End" },
+      } as SliderOptions,
+      status: "init" as "init" | "loading" | "ready",
     },
   });
 
@@ -58,11 +74,25 @@ export const Field: FC<{
     };
   }, []);
 
-  // if (type === "date" || type === "datetime") {
-  //   try {
-  //     local.date.label = format(form.hook.getValues(name), "PPP");
-  //   } catch (e) {}
-  // }
+  useEffect(() => {
+    if (type === "slider") {
+      local.slider.value = parseSliderValue(value, local.slider.opt);
+      if (typeof slider_options === "function") {
+        if (local.slider.status === "init") {
+          local.slider.status = "ready";
+          local.render();
+          (async () => {
+            const res = await slider_options();
+            local.slider.opt = res;
+            local.render();
+          })();
+        }
+      } else {
+        local.slider.status = "ready";
+        local.render();
+      }
+    }
+  }, [value]);
 
   return (
     <>
@@ -90,6 +120,42 @@ export const Field: FC<{
             </FormLabel>
             <FormControl>
               <>
+                {type === "slider" && (
+                  <div className="c-flex-1 c-min-h-[40px] c-flex">
+                    <div className="c-flex c-flex-col c-items-center">
+                      <div>{local.slider.opt.min.value}</div>
+                      <div>{local.slider.opt.min.label}</div>
+                    </div>
+                    <div className="c-flex-1 c-flex-col c-items-stretch">
+                      <input
+                        type="range"
+                        className="c-flex-1 c-w-full"
+                        onInput={(e) => {
+                          const value = e.currentTarget.value;
+
+                          local.slider.value = parseSliderValue(
+                            value,
+                            local.slider.opt
+                          );
+                          form.hook.setValue(name, value);
+                          local.render();
+                        }}
+                        value={local.slider.value}
+                        min={local.slider.opt.min.value}
+                        max={local.slider.opt.max.value}
+                      />
+                      <div className="c-w-full c-bg-slate-200 c-mx-auto c-text-center">
+                        {local.slider.value}
+                      </div>
+                    </div>
+
+                    <div className="c-flex c-flex-col c-items-center">
+                      <div>{local.slider.opt.max.value}</div>
+                      <div>{local.slider.opt.max.label}</div>
+                    </div>
+                  </div>
+                )}
+
                 {["text", "password"].includes(type) && (
                   <Input {...field} type={type} />
                 )}
@@ -153,4 +219,23 @@ export const Field: FC<{
       />
     </>
   );
+};
+
+const parseSliderValue = (value: any, opt: SliderOptions) => {
+  let val = value;
+  if (typeof value !== "number") {
+    try {
+      val = parseInt(val);
+    } catch (e) {
+      val = opt.min.value;
+    }
+  }
+
+  if (typeof val !== "number" || isNaN(val)) {
+    val = opt.min.value;
+  }
+
+  if (val >= opt.max.value) return opt.max.value;
+  else if (val <= opt.min.value) return opt.min.value;
+  return val;
 };
