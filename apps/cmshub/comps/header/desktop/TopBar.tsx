@@ -3,6 +3,7 @@ import { useLocal } from "@/utils/use-local";
 import { useEffect } from "react";
 import { icon } from "../../../../../lib/comps/icon";
 import { ISession } from "../../typing";
+import { ProfileHeader } from "../Profile";
 
 export const TopBarDesktop = ({
   session,
@@ -66,7 +67,7 @@ export const TopBarDesktop = ({
               <div className={cx(`c-w-full c-flex c-justify-end`)}>{session.name}</div>
               <div className={cx(`c-text-xs c-capitalize c-w-full c-flex c-justify-end`)}>{session.roles}</div>
             </div>
-            <div className={cx(`c-cursor-pointer`)}>{session.image}</div>
+            <ProfileHeader session={session} />
           </div>
         </div>
       </div>

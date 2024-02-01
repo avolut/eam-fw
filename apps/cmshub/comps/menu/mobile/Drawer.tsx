@@ -53,7 +53,7 @@ export const DrawerMenu: FC<{
           {icon.close}
         </div>
       </div>
-      <div className={cx(`c-px-4 c-py-4 c-h-full c-overflow-y-scroll`)}>
+      <div className={cx(`c-px-0 c-py-0 c-h-full c-overflow-y-scroll`)}>
         <Menu list={local.mainMenu} />
       </div>
       <div className={cx(`c-flex c-flex-col`)}>

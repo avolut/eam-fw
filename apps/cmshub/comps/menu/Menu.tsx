@@ -69,7 +69,7 @@ export const Menu: FC<{ list: IMenuItem[] }> = ({ list }) => {
         if (local.menu_selected) {
           is_active = local.menu_selected === menu.url;
         } else {
-          is_active = i === 0;
+          // is_active = i === 0;
         }
         const { label, url, icon, items } = menu;
         return (
