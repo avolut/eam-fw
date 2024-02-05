@@ -2,17 +2,12 @@ import "@/css/build.css";
 import "@/utils/init";
 export * from "@/exports";
 
-import { Layout as CmsHubLayout } from "./apps/cmshub/Layout";
-import { Layout as WareifyLayout } from "./apps/wareify/Layout";
-import { WareifyStatus } from "./apps/wareify/Status";
+import { Layout as WareifyLayout } from "./app/Layout";
+import { WareifyStatus } from "./app/Status";
 
 export const wareify = {
   Layout: WareifyLayout,
   Status: WareifyStatus,
-};
-
-export const cmshub = {
-  Layout: CmsHubLayout,
 };
 
 export const color = {
