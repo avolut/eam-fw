@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "paths": {
-      "@/*": ["./lib/*"]
+      "@/*": ["./lib/*"],
+      "app/*": ["./app/*"]
     },
     "lib": ["ESNext", "DOM"],
     "module": "esnext",

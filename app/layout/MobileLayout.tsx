@@ -48,8 +48,8 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
                 "c-flex c-flex-col c-justify-center c-items-center c-px-3 c-flex-1 c-transition-all",
                 is_active
                   ? css`
-                      background: #eff6ff;
-                      border-top: 3px solid #2463eb;
+                      background: #fff7ef;
+                      border-top: 3px solid #eb7024;
                     `
                   : "c-border-t-transparent"
               )}
