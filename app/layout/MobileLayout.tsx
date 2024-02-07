@@ -31,7 +31,7 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
           " c-flex-row c-flex c-items-stretch c-justify-center",
           css`
             user-select: none;
-            border-top: 1px solid #ececeb;
+            border-top: 1px solid #7b6cb6;
             min-height: 60px;
           `
         )}
@@ -46,22 +46,40 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
               }}
               className={cx(
                 "c-flex c-flex-col c-justify-center c-items-center c-px-3 c-flex-1 c-transition-all",
-                is_active
-                  ? css`
-                      background: #fff7ef;
-                      border-top: 3px solid #eb7024;
-                    `
-                  : "c-border-t-transparent"
+                is_active &&
+                  css`
+                    background: #f4f3f8 !important;
+                  `
               )}
             >
               <div
-                className={css`
-                  margin-bottom: 3px;
-                `}
+                className={cx(
+                  "c-transition-all ",
+                  css`
+                    margin-bottom: 3px;
+                  `,
+                  is_active &&
+                    css`
+                      padding: 5px;
+                      padding-bottom: 7px;
+                      border-bottom: 4px solid #f68456;
+                    `
+                )}
               >
                 {icon}
               </div>
-              <div className="c-text-xs c-whitespace-nowrap">{title}</div>
+              <div
+                className={cx(
+                  "c-text-xs c-whitespace-nowrap c-transition-all c-delay-1000 c-px-[2px]",
+                  is_active &&
+                    css`
+                      height: 0px;
+                      overflow: hidden;
+                    `
+                )}
+              >
+                {title}
+              </div>
             </div>
           );
         })}

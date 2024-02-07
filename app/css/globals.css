@@ -57,12 +57,3 @@
     @apply c-bg-background c-text-foreground;
   }
 }
-
-.btn-default {
-  border-bottom: 3px solid #974202;
-}
-
-.btn-default:hover {
-  border-top: 3px solid transparent;
-  border-bottom: 0;
-}

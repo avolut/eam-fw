@@ -5,7 +5,7 @@ export * from "@/exports";
 import { Layout as WareifyLayout } from "./app/Layout";
 import { WareifyStatus } from "./app/Status";
 
-export const wareify = {
+export const wareify = { 
   Layout: WareifyLayout,
   Status: WareifyStatus,
 };
