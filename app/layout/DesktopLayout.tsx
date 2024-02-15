@@ -1,7 +1,7 @@
 import { getPathname } from "@/utils/pathname";
 import { FC, ReactNode, useState } from "react";
 import { icon } from "@/comps/icon";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 
 const menu = [
   {
@@ -105,57 +105,83 @@ export const MenuItem: FC<{
   url: string;
   submenu?: any;
   index?: number;
+  lv: number;
   openIndex?: number;
-  is_active: boolean;
-}> = ({ title, icon, url, submenu, index, openIndex, is_active }) => {
+  isActive: boolean;
+  onClick?: () => void;
+}> = ({
+  title,
+  icon,
+  url,
+  lv,
+  submenu,
+  index,
+  openIndex,
+  isActive,
+  onClick,
+}) => {
+  if (url !== "#") {
+    preload(url);
+  }
   return (
     <div
-      onClick={() => navigate(url)}
+      onClick={() => {
+        if (url !== "#") {
+          navigate(url);
+        }
+        if (onClick) onClick();
+      }}
       className={cx(
         css`
-          border-bottom: 1px solid #ccc;
-          padding-bottom: 5px;
+          svg {
+            width: 15px;
+            height: 15px;
+          }
         `,
-        "c-flex c-flex-col c-justify-center c-cursor-pointer c-ml-3 c-mt-2",
-        is_active
-          ? "c-bg-blue-50 c-border-l-blue-600"
-          : "c-border-t-transparent"
+        "c-flex c-cursor-pointer c-items-center c-text-sm",
+        "c-space-x-1 c-transition-all c-p-1 c-border-b hover:c-bg-blue-50",
+        isActive
+          ? css`
+              border-left: 4px solid #387aba;
+              background: #ecf4fb;
+            `
+          : css`
+              border-left: 4px solid transparent;
+            `
       )}
     >
-      <div className="c-flex c-w-full c-space-x-2 c-items-center c-ml-2">
-        <div
-          className={cx(
-            css`
-              margin-right: 10px;
-            `
-          )}
-        >
-          {icon}
-        </div>
-        <div className="c-mt-1 c-ml-3 c-w-full c-flex c-justify-between">
-          <div>
-            <span>{title}</span>
-          </div>
-          <div>
-            {!!submenu &&
-              submenu.length > 0 &&
-              (openIndex === index ? (
-                <ChevronUp />
-              ) : (
-                <ChevronDown className="c-justify-end" />
-              ))}
-          </div>
-        </div>
+      <div
+        className={cx(
+          css`
+            padding-left: ${lv * 10}px;
+          `
+        )}
+      ></div>
+      <div>{icon}</div>
+      <div className="c-flex-1">{title}</div>
+      <div
+        className={cx(
+          css`
+            svg {
+              width: 12px;
+              height: 12px;
+            }
+          `
+        )}
+      >
+        {!!submenu &&
+          submenu.length > 0 &&
+          (openIndex !== index ? <ChevronRight /> : <ChevronDown />)}
       </div>
     </div>
   );
 };
 
 export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | undefined>(undefined);
 
   const toggleSubmenu = (index: number) => {
-    setOpenIndex(index === openIndex ? null : index);
+    setOpenIndex(index === openIndex ? undefined : index);
   };
 
   return (
@@ -166,7 +192,6 @@ export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
           css`
             border-right: 1px solid #ececeb;
             min-width: 250px;
-            padding: 10px;
           `
         )}
       >
@@ -187,33 +212,45 @@ export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
           {menu.map((data, index) => {
             const { url } = data;
 
-            const is_active = getPathname() === url;
+            const isActive = getPathname() === url;
 
             return (
               <div key={index}>
-                <div
+                <MenuItem
+                  {...data}
+                  lv={0}
+                  openIndex={openIndex}
+                  index={index}
+                  isActive={isActive}
                   onClick={() => toggleSubmenu(index)}
-                  className="cursor-pointer"
+                />
+                <div
+                  className={cx(
+                    "pl-8",
+                    openIndex !== index &&
+                      css`
+                        display: none;
+                      `
+                  )}
                 >
-                  <MenuItem
-                    {...data}
-                    openIndex={openIndex as number}
-                    index={index}
-                    is_active={is_active as boolean}
-                  />
-                </div>
-                {openIndex === index && (
-                  <div className="pl-8">
-                    {data?.submenu?.map((subitem, subindex) => (
-                      <div key={subindex} className="c-ml-3">
-                        <MenuItem
-                          {...subitem}
-                          is_active={is_active as boolean}
-                        />
+                  {data?.submenu?.map((subitem, subindex) => {
+                    const isActive = getPathname() === subitem.url;
+
+                    if (
+                      isActive &&
+                      openIndex === undefined &&
+                      openIndex !== index
+                    ) {
+                      setOpenIndex(index);
+                    }
+
+                    return (
+                      <div key={subindex}>
+                        <MenuItem {...subitem} lv={1} isActive={isActive} />
                       </div>
-                    ))}
-                  </div>
-                )}
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
