@@ -57,3 +57,7 @@
     @apply c-bg-background c-text-foreground;
   }
 }
+
+.btn-secondary {
+  border: 2px solid orange;
+}

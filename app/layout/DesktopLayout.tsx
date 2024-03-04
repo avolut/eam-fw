@@ -1,262 +1,285 @@
 import { getPathname } from "@/utils/pathname";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactElement, ReactNode, useEffect, useState } from "react";
 import { icon } from "@/comps/icon";
 import { ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 
-const menu = [
-  {
-    title: "Dashboard",
-    icon: icon.home,
-    url: "/adm/home",
-  },
-  {
-    title: "Schedule",
-    icon: icon.schedule,
-    url: "#",
-    submenu: [
-      {
-        title: "Inspection Schedule",
-        icon: icon.schedule,
-        url: "/adm/insp/schedule",
-      },
-      {
-        title: "Maintenance Schedule",
-        icon: icon.schedule,
-        url: "/adm/mnt/schedule",
-      },
-    ],
-  },
-  {
-    title: "Transaction",
-    icon: icon.transaction,
-    url: "#",
-    submenu: [
-      {
-        title: "Inspection",
-        icon: icon.transaction,
-        url: "/adm/insp/home",
-      },
-      {
-        title: "Maintenance",
-        icon: icon.transaction,
-        url: "/adm/wo/list",
-      },
-    ],
-  },
-  {
-    title: "Master Data",
-    icon: icon.master_data,
-    url: "#",
-    submenu: [
-      {
-        title: "Asset",
-        icon: icon.master_data,
-        url: "/master/asset/list",
-      },
-      {
-        title: "Asset Category",
-        icon: icon.master_data,
-        url: "/master/category/list",
-      },
-      {
-        title: "Asset Location",
-        icon: icon.master_data,
-        url: "/master/location/list",
-      },
-      {
-        title: "Parameter",
-        icon: icon.master_data,
-        url: "/master/parameter/list",
-      },
-      {
-        title: "Maintenance Task",
-        icon: icon.master_data,
-        url: "/master/task/list",
-      },
-    ],
-  },
-  {
-    title: "Manage User",
-    icon: icon.manage_user,
-    url: "#",
-    submenu: [
-      {
-        title: "User",
-        icon: icon.manage_user,
-        url: "/master/user/list",
-      },
-      {
-        title: "Role",
-        icon: icon.manage_user,
-        url: "/master/role/list",
-      },
-    ],
-  },
-  {
-    title: "Profile",
-    icon: icon.profile,
-    url: "/profile",
-  },
-];
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { useLocal } from "@/utils/use-local";
 
-export const MenuItem: FC<{
-  title: string;
-  icon: any;
-  url: string;
-  submenu?: any;
-  index?: number;
-  lv: number;
-  openIndex?: number;
-  isActive: boolean;
-  onClick?: () => void;
-}> = ({
-  title,
-  icon,
-  url,
-  lv,
-  submenu,
-  index,
-  openIndex,
-  isActive,
-  onClick,
-}) => {
-  if (url !== "#") {
-    preload(url);
-  }
+type IMenu = [string, ReactNode, string | IMenu[]];
+
+const menu: Record<string, IMenu[]> = {
+  Operator: [],
+  Picker: [],
+  Admin: [
+    ["Dashboard", icon.home, "/adm/home"],
+    ["Asset", icon.master_data, "/master/asset/list/_#master"],
+    [
+      "Inspection",
+      icon.inspect,
+      [
+        ["Inspection Schedule", null, "/adm/insp/schedule"],
+        [
+          "Inspection Result",
+          null,
+          [
+            ["Reported", null, "/adm/insp/home#0"],
+            ["Good", null, "/adm/insp/home#1"],
+            ["Caution", null, "/adm/insp/home#2"],
+            ["Urgent", null, "/adm/insp/home#3"],
+          ],
+        ],
+      ],
+    ],
+    [
+      "Maintenance",
+      icon.maintenance,
+      [
+        ["Preventive Schedule", null, "/adm/mnt/schedule/list"],
+        [
+          "Work Order",
+          null,
+          [
+            ["Draft", null, "/adm/wo/list#0"],
+            ["Issued", null, "/adm/wo/list#1"],
+            ["In Progress", null, "/adm/wo/list#2"],
+            ["Done", null, "/adm/wo/list#3"],
+          ],
+        ],
+        ["Approval Rule", null, "/master/wo-rule/list"],
+      ],
+    ],
+    ["Profile", icon.profile, "/profile"],
+  ],
+  Inspector: [
+    ["Dashboard", icon.home, "/insp/home"],
+    ["Inspection Schedule", icon.schedule, "/adm/insp/schedule"],
+    [
+      "Inspection Result",
+      icon.inspect,
+      [
+        ["Reported", null, "/adm/insp/home#0"],
+        ["Good", null, "/adm/insp/home#1"],
+        ["Caution", null, "/adm/insp/home#2"],
+        ["Urgent", null, "/adm/insp/home#3"],
+      ],
+    ],
+    ["Profile", icon.profile, "/profile"],
+  ],
+  Maintenance: [
+    ["Dashboard", icon.home, "/mtn/home"],
+    ["Preventive Schedule", icon.maintenance, "/adm/mnt/schedule/list"],
+    [
+      "Work Order",
+      icon.note,
+      [
+        ["Draft", null, "/adm/wo/list#0"],
+        ["Issued", null, "/adm/wo/list#1"],
+        ["In Progress", null, "/adm/wo/list#2"],
+        ["Done", null, "/adm/wo/list#3"],
+      ],
+    ],
+    ["Approval Rule", icon.schedule, "/master/wo-rule/list"],
+    ["Profile", icon.profile, "/profile"],
+  ],
+  Staff: [
+    ["Dashboard", icon.home, "/staff/home"],
+    ["Reported Issue", icon.master_data, "/staff/reported-issue/list"],
+    ["History", icon.inspect, "/staff/history/list"],
+    ["Profile", icon.profile, "/profile"],
+  ],
+};
+
+export const DesktopLayout: FC<{ children: ReactElement }> = ({ children }) => {
+  const local = useLocal({
+    size:
+      parseInt(localStorage.getItem("app-desktop-sidebar-size") || "") || 18,
+  });
   return (
-    <div
-      onClick={() => {
-        if (url !== "#") {
-          navigate(url);
-        }
-        if (onClick) onClick();
-      }}
-      className={cx(
-        css`
-          svg {
-            width: 15px;
-            height: 15px;
-          }
-        `,
-        "c-flex c-cursor-pointer c-items-center c-text-sm",
-        "c-space-x-1 c-transition-all c-p-1 c-border-b hover:c-bg-blue-50",
-        isActive
-          ? css`
-              border-left: 4px solid #387aba;
-              background: #ecf4fb;
-            `
-          : css`
-              border-left: 4px solid transparent;
-            `
-      )}
-    >
-      <div
-        className={cx(
-          css`
-            padding-left: ${lv * 10}px;
-          `
-        )}
-      ></div>
-      <div>{icon}</div>
-      <div className="c-flex-1">{title}</div>
-      <div
-        className={cx(
-          css`
-            svg {
-              width: 12px;
-              height: 12px;
-            }
-          `
-        )}
-      >
-        {!!submenu &&
-          submenu.length > 0 &&
-          (openIndex !== index ? <ChevronRight /> : <ChevronDown />)}
-      </div>
+    <PanelGroup direction="horizontal">
+      <>
+        <Panel
+          id="sidebar"
+          minSize={15}
+          defaultSize={local.size}
+          order={1}
+          className={cx("c-border-r c-flex c-flex-col c-items-stretch")}
+          onResize={(size) => {
+            local.size = size;
+            local.render();
+            localStorage.setItem("app-desktop-sidebar-size", size.toString());
+          }}
+        >
+          <Logo />
+          <SideBar />
+        </Panel>
+        <PanelResizeHandle />
+      </>
+      <Panel order={2}>{children}</Panel>
+    </PanelGroup>
+  );
+};
+
+const SideBar = () => {
+  const local = useLocal({
+    open: new Set<IMenu>(),
+  });
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  let active_role = "Admin" as keyof typeof menu;
+  if (user && user?.user_role_user_role_id_userTom_user[0]?.m_role?.name) {
+    active_role = user?.user_role_user_role_id_userTom_user[0]?.m_role?.name;
+  }
+  const active_menu = !!user ? menu[active_role] : [];
+
+  return (
+    <div className="c-flex c-flex-col c-flex-1 c-relative c-overflow-auto">
+      {active_menu.map((item, key) => {
+        return (
+          <Menu
+            key={key}
+            item={item}
+            open={local.open}
+            render={local.render}
+            on_open={() => {
+              if (!local.open.has(item)) {
+                local.open.add(item);
+              }
+
+              setTimeout(() => {
+                local.render();
+              });
+            }}
+          />
+        );
+      })}
     </div>
   );
 };
 
-export const DesktopLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  const [openIndex, setOpenIndex] = useState<number | undefined>(undefined);
+const Menu: FC<{
+  item: IMenu;
+  lv?: number;
+  open: Set<IMenu>;
+  render: () => void;
+  on_open: () => void;
+}> = ({ item, lv, open, render, on_open }) => {
+  const [label, icon, link] = item;
+  if (typeof link === "string") {
+    preload(link);
+  }
 
-  const toggleSubmenu = (index: number) => {
-    setOpenIndex(index === openIndex ? undefined : index);
-  };
+  const is_active = getPathname() === link;
+  const has_child = Array.isArray(link);
+  useEffect(() => {
+    if (is_active) {
+      open.add(item);
+      on_open();
+    }
+  }, [is_active]);
 
   return (
-    <div className={cx("c-flex c-flex-1 c-flex-row")}>
+    <>
       <div
         className={cx(
-          "c-flex c-flex-col",
+          "c-flex c-cursor-pointer c-items-center c-text-sm",
+          "c-space-x-1 c-transition-all c-p-1 c-border-b hover:c-bg-blue-50",
           css`
-            border-right: 1px solid #ececeb;
-            min-width: 250px;
-          `
+            svg {
+              width: 15px;
+              height: 15px;
+            }
+          `,
+          is_active
+            ? css`
+                border-left: 4px solid #387aba;
+                background: #ecf4fb;
+              `
+            : css`
+                border-left: 4px solid transparent;
+              `
         )}
+        onClick={() => {
+          if (typeof link === "string") {
+            navigate(link);
+          } else if (has_child) {
+            if (open.has(item)) {
+              open.delete(item);
+            } else {
+              open.add(item);
+            }
+            render();
+          }
+        }}
       >
         <div
           className={cx(
             css`
-              border-left: 4px solid black;
-              padding-left: 10px;
-              margin-bottom: 20px;
-              font-size: 20px;
-              font-weight: bold;
+              padding-left: ${(lv || 0) * 10}px;
             `
           )}
-        >
-          Wareify
-        </div>
-        <div className="c-flex c-flex-col c-justify-between">
-          {menu.map((data, index) => {
-            const { url } = data;
-
-            const isActive = getPathname() === url;
-
+        ></div>
+        <div>{icon}</div>
+        <div className="c-flex-1">{label}</div>
+        {has_child && (
+          <>{open.has(item) ? <ChevronDown /> : <ChevronRight />}</>
+        )}
+      </div>
+      <div className={cx("c-flex c-flex-col", !open.has(item) && "c-hidden")}>
+        {has_child &&
+          link.map((item, key) => {
             return (
-              <div key={index}>
-                <MenuItem
-                  {...data}
-                  lv={0}
-                  openIndex={openIndex}
-                  index={index}
-                  isActive={isActive}
-                  onClick={() => toggleSubmenu(index)}
-                />
-                <div
-                  className={cx(
-                    "pl-8",
-                    openIndex !== index &&
-                      css`
-                        display: none;
-                      `
-                  )}
-                >
-                  {data?.submenu?.map((subitem, subindex) => {
-                    const isActive = getPathname() === subitem.url;
-
-                    if (
-                      isActive &&
-                      openIndex === undefined &&
-                      openIndex !== index
-                    ) {
-                      setOpenIndex(index);
-                    }
-
-                    return (
-                      <div key={subindex}>
-                        <MenuItem {...subitem} lv={1} isActive={isActive} />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              <Menu
+                key={key}
+                lv={(lv || 0) + 1}
+                item={item}
+                open={open}
+                render={render}
+                on_open={() => {
+                  if (!open.has(item)) {
+                    open.add(item);
+                  }
+                  on_open();
+                }}
+              />
             );
           })}
-        </div>
       </div>
-      <div className="c-flex c-flex-1 c-flex-col">{children}</div>
+    </>
+  );
+};
+
+const Logo = () => {
+  return (
+    <div
+      className={cx(
+        "c-flex c-flex-col",
+        css`
+          margin-top: 20px;
+        `
+      )}
+    >
+      <div
+        className={cx(
+          "c-flex c-items-center",
+          css`
+            border-left: 4px solid black;
+            padding-left: 10px;
+            margin-bottom: 20px;
+            font-size: 20px;
+          `
+        )}
+      >
+        <span className="c-font-bold c-pr-1 ">Wareify </span>
+        <span
+          className={cx(
+            "c-mr-1 c-border-r-2 c-border-r-slate-400",
+            css`
+              height: 20px;
+            `
+          )}
+        ></span>
+        <span className="c-font-bold c-text-orange-400">EAM</span>
+      </div>
     </div>
   );
 };

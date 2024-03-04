@@ -2,6 +2,7 @@ import { FC } from "react";
 
 const colors = {
   inspection_result: {
+    reported: "blue",
     good: "green",
     caution: "orange",
     urgent: "red",

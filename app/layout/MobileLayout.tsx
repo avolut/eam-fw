@@ -22,6 +22,14 @@ const menu = {
     ["Maintenance", icon.maintenance, "/adm/wo/list"],
     ["Profile", icon.profile, "/profile"],
   ],
+  Staff: [
+    ["Home", icon.home, "/staff/home"],
+    ["Inspection", icon.inspect, "/adm/insp/home"],
+    ["Scan QR", icon.qr, "/adm/scan-qr"],
+    ["Profile", icon.profile, "/profile"],
+  ],
+  Operator: [],
+  Picker: [],
 };
 
 export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
@@ -34,6 +42,7 @@ export const MobileLayout: FC<{ children: ReactNode }> = ({ children }) => {
 
   const active_menu = !!user ? menu[active_role] : [];
   preload(active_menu.map(([_, __, url]) => url) as string[]);
+  if (active_menu.length === 0) return children;
 
   return (
     <div

@@ -3,6 +3,7 @@ export const session = {
     name: "",
     id: "",
     role: "",
+    id_client: "",
   },
 };
 
@@ -17,6 +18,18 @@ export const loadSession = () => {
         raw[
           "user_role_user_role_id_userTom_user"
         ][0]?.m_role?.name?.toLowerCase();
+    }
+
+    if (typeof raw === "object" && !!raw["id"]) {
+      session.user.id = raw["id"];
+    }
+
+    if (typeof raw === "object" && !!raw["name"]) {
+      session.user.name = raw["name"];
+    }
+
+    if (typeof raw === "object" && !!raw["id_client"]) {
+      session.user.id_client = raw["id_client"];
     }
 
     if (!session.user.role) {
