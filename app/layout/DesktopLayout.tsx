@@ -1,7 +1,7 @@
 import { getPathname } from "@/utils/pathname";
 import { FC, ReactElement, ReactNode, useEffect, useState } from "react";
 import { icon } from "@/comps/icon";
-import { ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
+import { Activity, ChevronDown, ChevronRight, ChevronUp } from "lucide-react";
 
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import { useLocal } from "@/utils/use-local";
@@ -9,8 +9,53 @@ import { useLocal } from "@/utils/use-local";
 type IMenu = [string, ReactNode, string | IMenu[]];
 
 const menu: Record<string, IMenu[]> = {
-  Operator: [],
-  Picker: [],
+  Operator: [
+    ["Dashboard", icon.home, "/opr/home"],
+    ["Warehouse Map", icon.dashboard, "/wh/map"],
+    ["Inbound List", icon.in, "/opr/inbound/order/list"],
+    ["Outbound List", icon.out, "/opr/outbound/transaction/order/list"],
+    ["Inventory List", icon.box, "/opr/inventory/list"],
+    [
+      "Master Data",
+      icon.master_data,
+      [
+        ["Product", null, "/master/product/list"],
+        ["Warehouse", null, "/master/warehouse/list"],
+        ["Bin", null, "/master/data/bin/list"],
+      ],
+    ],
+    ["Profile", icon.profile, "/profile"],
+  ],
+  Picker: [
+    ["Dashboard", icon.home, "/pkr/home"],
+    [
+      "Inbound",
+      icon.in,
+      [
+        ["New Task", null, "/pkr/inbound/new/task/list"],
+        ["On Going Task", null, "/pkr/inbound-task/list/ongoing"],
+      ],
+    ],
+    [
+      "Outbound",
+      icon.in,
+      [
+        ["New Task", null, "/pkr/outbound/new/task/list"],
+        ["On Going Task", null, "/pkr/outbond-task/list"],
+        ["Task Done", null, "/pkr/transaction/page"],
+      ],
+    ],
+    [
+      "Master Data",
+      icon.master_data,
+      [
+        ["Product", null, "/master/product/list"],
+        ["Warehouse", null, "/master/warehouse/list"],
+        ["Bin", null, "/master/data/bin/list"],
+      ],
+    ],
+    ["Profile", icon.profile, "/profile"],
+  ],
   Admin: [
     ["Dashboard", icon.home, "/adm/home"],
     ["Asset", icon.master_data, "/master/asset/list/_#master"],
@@ -95,6 +140,12 @@ export const DesktopLayout: FC<{ children: ReactElement }> = ({ children }) => {
     size:
       parseInt(localStorage.getItem("app-desktop-sidebar-size") || "") || 18,
   });
+
+  const user = JSON.parse(localStorage.getItem("user") || "null");
+  let active_role = "Admin" as keyof typeof menu;
+  if (user && user?.user_role_user_role_id_userTom_user[0]?.m_role?.name) {
+    active_role = user?.user_role_user_role_id_userTom_user[0]?.m_role?.name;
+  }
   return (
     <PanelGroup direction="horizontal">
       <>
@@ -110,8 +161,8 @@ export const DesktopLayout: FC<{ children: ReactElement }> = ({ children }) => {
             localStorage.setItem("app-desktop-sidebar-size", size.toString());
           }}
         >
-          <Logo />
-          <SideBar />
+          <Logo active_role={active_role} />
+          <SideBar active_role={active_role} />
         </Panel>
         <PanelResizeHandle />
       </>
@@ -120,16 +171,11 @@ export const DesktopLayout: FC<{ children: ReactElement }> = ({ children }) => {
   );
 };
 
-const SideBar = () => {
+const SideBar: FC<{ active_role: string }> = ({ active_role }) => {
   const local = useLocal({
     open: new Set<IMenu>(),
   });
-  const user = JSON.parse(localStorage.getItem("user") || "null");
-  let active_role = "Admin" as keyof typeof menu;
-  if (user && user?.user_role_user_role_id_userTom_user[0]?.m_role?.name) {
-    active_role = user?.user_role_user_role_id_userTom_user[0]?.m_role?.name;
-  }
-  const active_menu = !!user ? menu[active_role] : [];
+  const active_menu = !!active_role ? menu[active_role] : [];
 
   return (
     <div className="c-flex c-flex-col c-flex-1 c-relative c-overflow-auto">
@@ -248,7 +294,7 @@ const Menu: FC<{
   );
 };
 
-const Logo = () => {
+const Logo: FC<{ active_role: string }> = ({ active_role }) => {
   return (
     <div
       className={cx(
@@ -278,7 +324,9 @@ const Logo = () => {
             `
           )}
         ></span>
-        <span className="c-font-bold c-text-orange-400">EAM</span>
+        <span className="c-font-bold c-text-orange-400">
+          {["Operator", "Picker"].includes(active_role) ? "WMS" : "EAM"}
+        </span>
       </div>
     </div>
   );
